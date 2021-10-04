@@ -1,0 +1,45 @@
+%------------------------------------------------------------------------%
+%START%
+%------------------------------------------------------------------------%
+% This is program for Creating Ybus Matrix when Zprimitive is known Method %
+%------------------------------------------------------------------------%
+
+clc;
+clear all;
+
+%------------------------------------------------------------------------%
+% User Inputs %
+%------------------------------------------------------------------------%
+
+n=input('Enter number of Buses in the Power System : ');
+l=input('Enter the number of Links in the Power System Graph : ');
+A=input('Enter the Incidence Matrix of the Power System : ');
+%Enter nodes starting with Slack Bus followed by all PQ Buses and at last
+%all PV Buses
+
+s1=size(A); % Checking Size of User entered Incidence Matrix
+if (l~=s1(1,1) || n~=s1(1,2))
+    fprintf('Size of Incidence Matrix is incorrect \n');
+    goto(16)
+    return;
+end
+
+Zprim=input('Enter the Primitive Zbus Matrix of the Power System : ');
+
+s2=size(Zprim); % Checking Size of User entered Incidence Matrix
+if (l~=s1(1,1) || l~=s1(1,2))
+    fprintf('Size of  Primitive Zbus Matrix is incorrect \n');
+    goto(27)
+    return;
+end
+
+%------------------------------------------------------------------------%
+% Calculation of Ybus Matrix %
+%------------------------------------------------------------------------%
+Yprim=Zprim^(-1); % Calculating Primitive Ybus
+
+Ybus=A'*Yprim*A; % Calculating Ybus Matrix
+
+%------------------------------------------------------------------------%
+% END %
+%------------------------------------------------------------------------%
